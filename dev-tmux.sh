@@ -62,16 +62,32 @@ printf "║Запускам интерпритатор python3 проекта и
 printf "║Включаем эмулятор терминалa.								       ║\n"
 printf "╚══════════════════════════════════════════════════════════════════════════════════════════════╝\n"
 
-
 echo -n "Для продолжения нажмите ввод"
 read nothing
 
 function create_sess {
-	tmux kill-server
-	tmux new -s $project_name -d #Создаем tmux-сессию с названием нашего выбранного проекта и сразу от нее отключаемся, оставляя ее работать как сервер
-	tmux split-window -v -t $project_name:0.0 #Разбивам окно вертикально. 0окно 0панель
-	tmux send-keys -t $project_name:0.0 'htop' Enter #В верхней панели запускаем htop
-	tmux attach-session -t $project_name	
+	tmux kill-session -t $project_name #На всякий случай убьем сессию, если она существует
+	tmux new -s $project_name -n vim -d #Создаем tmux-сессию с названием нашего выбранного проекта и сразу от нее отключаемся, оставляя ее работать как сервер. Также создаем первое окно с названием vim
+	# Создаем новое окно 2 рабочего стола - 2:1
+	tmux new-window -n develop -t $project_name 
+	# Делим окна и присваиваем им номера для дальнейшего управления
+	# Для рабочего стола 1
+	tmux send-keys -t $project_name:1.1 'vim' Enter #На всю панель включаем vim (потом сделать программу выбора сессий)
+	# Для рабочего стола 2
+	tmux split-window -h -t $project_name:2.1 #Разбивам окно 2 рабочего окна
+	tmux split-window -v -t $project_name:2.2 #Разбивам окно 2 рабочего окна
+	# Записываем, что хотим открыть в этих окнах	
+	# Первый рабочий стол
+	# 2 рабочий стол
+	tmux send-keys -t $project_name:2.1 # Здесь будет эмулятор терминала 
+	tmux send-keys -t $project_name:2.2 'python3' Enter #Запускаем poetry среду и включаем ее python
+	tmux send-keys -t $project_name:2.3 'htop' Enter #В верхней панели запускаем htop
+
+	tmux select-window -t $project_name:1.1 #Переводим курсор на окно 1
+
+	tmux attach-session -t $project_name #Подключаемся к сессии, после завершения всех настроек
+
+#	clear #Очистим терминал 
 }
 
 function auth_sess {
@@ -90,7 +106,8 @@ if [[ -s ~/tmp/ba.txt ]]; then
 else
 	#printf "EMPTY \n" # Вывести если ошибка незаписана и файл пуст
 	printf "╔══════════════════════════════════════════════════════╗\n"
-	printf "║Сессия уже существует, значит мы к ней подключаемся   ║\n"
+	printf "║Сессия уже существует.                                ║\n"
+	printf "║Убить сессию и начать новую или продолжить в старой?  ║\n"
 	printf "╚══════════════════════════════════════════════════════╝\n"
 	echo -n "Для продолжения нажмите ввод"
 	read nothing
