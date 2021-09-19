@@ -72,22 +72,22 @@ function create_sess {
 	tmux new-window -n develop -t $project_name 
 	# Делим окна и присваиваем им номера для дальнейшего управления
 	# Для рабочего стола 1
-	tmux send-keys -t $project_name:1.1 'vim' Enter #На всю панель включаем vim (потом сделать программу выбора сессий)
+	tmux send-keys -t $project_name:1.1 'poetry shell && vim' Enter #На всю панель включаем vim (потом сделать программу выбора сессий)
 	# Для рабочего стола 2
 	tmux split-window -h -t $project_name:2.1 #Разбивам окно 2 рабочего окна
 	tmux split-window -v -t $project_name:2.2 #Разбивам окно 2 рабочего окна
 	# Записываем, что хотим открыть в этих окнах	
 	# Первый рабочий стол
 	# 2 рабочий стол
-	tmux send-keys -t $project_name:2.1 # Здесь будет эмулятор терминала 
-	tmux send-keys -t $project_name:2.2 'python3' Enter #Запускаем poetry среду и включаем ее python
+	tmux send-keys -t $project_name:2.1 'poetry shell' Enter # Здесь будет эмулятор терминала c включенным poetry окружением
+	tmux send-keys -t $project_name:2.2 'poetry shell && python3' Enter #Запускаем poetry среду и включаем ее python
 	tmux send-keys -t $project_name:2.3 'htop' Enter #В верхней панели запускаем htop
 
 	tmux select-window -t $project_name:1.1 #Переводим курсор на окно 1
 
 	tmux attach-session -t $project_name #Подключаемся к сессии, после завершения всех настроек
 
-#	clear #Очистим терминал 
+	clear #Очистим терминал 
 }
 
 function auth_sess {
