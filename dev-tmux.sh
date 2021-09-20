@@ -2,6 +2,7 @@
 
 clear
 cd /home/gurov/documents/development/poetry_github/ # Enter your path here where your project directories are stored 
+info='cat info/git_pass.md'
 b_pwd=`pwd` # Эта переменная всегда будет показывать одно и то же
 printf "\n"
 printf "╔══════════════════════════════════════════════════════════════════════════════════════════════╗\n"
@@ -88,18 +89,27 @@ function create_sess {
 	tmux new -s $project_name -n vim -d # Создаем tmux-сессию с названием нашего выбранного проекта, называем первое окно vim и сразу отключаемся от проекта оставляя его работать как сервер
 	# Создаем новое окно 2 рабочего стола - 2:1 и называем его develop
 	tmux new-window -n develop -t $project_name 
+	# Создаем новое окно 3 рабочего стола - 3:1 и называем его develop
+	tmux new-window -n info -t $project_name 
 	# Делим окна 
 	# Для рабочего стола 1
 	tmux send-keys -t $project_name:1.1 'poetry shell' Enter #Подключаем poetry
 	# Для рабочего стола 2
 	tmux split-window -h -t $project_name:2.1 #Разбивам окно 2 рабочего окна
 	tmux split-window -v -t $project_name:2.2 #Разбивам окно 2 рабочего окна
+	# Для рабочего стола 3
+	tmux split-window -h -t $project_name:3.1 #Разбивам окно 3 рабочего окна
+	tmux split-window -v -t $project_name:3.2 #Разбивам окно 3 рабочего окна
 	# Записываем, что хотим открыть в этих окнах	
 	# Первый рабочий стол
 	# Второй рабочий стол
 	tmux send-keys -t $project_name:2.1 'poetry shell' Enter # Здесь будет эмулятор терминала c включенным poetry окружением
 	tmux send-keys -t $project_name:2.2 'poetry shell' Enter # Запускаем poetry среду и включаем ее python
 	tmux send-keys -t $project_name:2.3 'htop' Enter # В верхней панели запускаем htop
+	# Третий рабочий стол
+	tmux send-keys -t $project_name:3.1 'cd info/ && cat git_pass.md' Enter # Enter here the folder that contains the git info file
+	tmux send-keys -t $project_name:3.2  # Место пока свободно, можно вывести подсказки
+	tmux send-keys -t $project_name:3.3  # Место пока свободно, можно вывести подсказки
 
 	tmux select-window -t $project_name:1.1 # Переводим курсор на окно 1
 	}
