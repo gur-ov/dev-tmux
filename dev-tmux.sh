@@ -1,7 +1,7 @@
 #!/bin/bash
 
 clear
-cd /home/gurov/documents/development/poetry_github/
+cd /home/gurov/documents/development/poetry_github/ # Enter your path here where your project directories are stored 
 b_pwd=`pwd` # Эта переменная всегда будет показывать одно и то же
 printf "\n"
 printf "╔══════════════════════════════════════════════════════════════════════════════════════════════╗\n"
