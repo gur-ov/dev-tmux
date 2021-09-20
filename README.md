@@ -2,6 +2,10 @@
 
 *Script for open develop tmux session*
 
+  ## Version.
+ 
+1.0.0
+
   ## License.
 
 License: Creative Commons CC0.
