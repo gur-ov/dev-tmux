@@ -1,10 +1,11 @@
-  # dev-tmux
+  # gur-ov/dev-tmux
 
 *Script for open develop tmux session*
 
   ## License.
 
 License: Creative Commons CC0.
+www.gurov.sk/dev
 
   ## Description.
 
