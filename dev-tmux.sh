@@ -2,50 +2,49 @@
 
 clear
 cd /home/gurov/documents/development/poetry_github/
-b_pwd=`pwd` #Эта переменная всегда будет показывать одно и то же
+b_pwd=`pwd` # Эта переменная всегда будет показывать одно и то же
 printf "\n"
 printf "╔══════════════════════════════════════════════════════════════════════════════════════════════╗\n"
-printf "║Приветствую! Добро пожаловать в скрипт gur-o/dev-tmux                                         ║\n"
+printf "║Welcome to gur-ov/dev-tmux | www.gurov.sk/dev                                         	       ║\n"
+printf "║License: Creative Commons CC0                                         		               ║\n"
+printf "║Your projects should include: git, poetry, python3                                            ║\n"
 printf "╚══════════════════════════════════════════════════════════════════════════════════════════════╝\n"
 printf "\n"
 printf "╔══════════════════════════════════════════════════════════════════════════════════════════════╗\n"
-printf "║Какой проект ты хочешь сегодня открыть?                                                       ║\n"
-printf "║Мы находимся сейчас в катлоге разработок: $b_pwd \n"
-printf "║Посмотри на список проектов и выбери себе один из них                                         ║\n"
+printf "║What will we open?			                                                       ║\n"
+printf "║We are here: $b_pwd \n"
+printf "║Look at the list of projects and choose one                                   		       ║\n"
 printf "╚══════════════════════════════════════════════════════════════════════════════════════════════╝\n"
 printf "\n"
 
 # Вывод списка доступных проектов
-# printf "\t `ls` \n" # Стандартный не красивый вывод
-# Идея в том, чтобы создать текстовый файл со списоком, а потом сделать его красивый вывод на монитор
 ls > /tmp/dev-tmux_ls # Вывод содержимого текущего каталога в файл 
 cat -b /tmp/dev-tmux_ls # Вывод нумерованного списка из файла
 
 printf "\n"
-echo -n "Напишите название проекта, который вы хотите открыть и нажмите ввод: "
+echo -n "Write the name of the project and hit enter: "
 read project_name
+printf "\n"
 
-#Необходимо проверить, существует ли этот катклог. Если нет, вернуться на этап выбора.
+# Необходимо проверить, существует ли этот каталог. Если нет, вернуться на этап выбора.
 
 function re-enter {
 	cd /home/gurov/documents/development/poetry_github/
-	b_pwd=`pwd` #Эта переменная всегда будет показывать одно и то же
+	b_pwd=`pwd` # Эта переменная всегда будет показывать одно и то же
 	printf "\n"
 	printf "╔══════════════════════════════════════════════════════════════════════════════════════════════╗\n"
-	printf "║Попробуй еще раз, только без ошибок!							       ║\n"
-	printf "║Мы находимся сейчас в катлоге разработок: $b_pwd \n"
-	printf "║Еще раз посмотри на список проектов и выбери себе один из них 				       ║\n"
+	printf "║Error. Try again 									       ║\n"
+	printf "║We are here: $b_pwd \n"
+	printf "║Take another look at the list of projects and choose one 				       ║\n"
 	printf "╚══════════════════════════════════════════════════════════════════════════════════════════════╝\n"
 	printf "\n"
 
 	# Вывод списка доступных проектов
-	# printf "\t `ls` \n" # Стандартный не красивый вывод
-	# Идея в том, чтобы создать текстовый файл со списоком, а потом сделать его красивый вывод на монитор
 	ls > /tmp/dev-tmux_ls # Вывод содержимого текущего каталога в файл 
 	cat -b /tmp/dev-tmux_ls # Вывод нумерованного списка из файла
 
 	printf "\n"
-	echo -n "Напишите БЕЗ ОШИБОК название проекта, который вы хотите открыть и нажмите ввод: "
+	echo -n "Write the name of the project and hit enter: "
 	read project_name
 	control_name_1
 }
@@ -54,16 +53,16 @@ function control_name_1 {
 	if [[ -d "$project_name" ]]; then
 		printf "\n"
 		printf "╔═════════════════════════════════════════════════════╗\n"
-		printf "║Каталог $project_name существует                      \n"
-		printf "║Все ок, можно продолжать                             ║\n"
+		printf "║Directory $project_name exists \n"
+		printf "║Everything is ok, you can continue                   ║\n"
 		printf "╚═════════════════════════════════════════════════════╝\n"
 		printf "\n"
 
 	else
 		printf "\n"
 		printf "╔══════════════════════════════════════════════════════╗\n"
-		printf "║Каталог $project_name НЕ существует                    \n"
-		printf "║Дело дрянь... Но мы попробуем разобраться             ║\n"
+		printf "║Directory $project_name does not exist \n"
+		printf "║Trying to solve the problem \n"
 		printf "╚══════════════════════════════════════════════════════╝\n"
 		printf "\n"
 		re-enter
@@ -75,26 +74,21 @@ control_name_1
 cd /home/gurov/documents/development/poetry_github/$project_name
 printf "\n"
 printf "╔══════════════════════════════════════════════════════════════════════════════════════════════╗\n"
-printf "║Переходим в каталог с проектом $project_name \n"
-printf "║Теперь мы здесь: `pwd`\n"
-printf "║Активируем рабочее пространство tmux							       ║\n"
-printf "║Включаем виртуальное окружение poetry							       ║\n"
-printf "║Запускам интерпритатор python3 проекта из виртуального окружения			       ║\n"
-printf "║Включаем эмулятор терминалa.								       ║\n"
+printf "║Go to the directory with the project $project_name \n"
+printf "║Now we are here: `pwd`\n"
+printf "║Launch: tmux, poetry: python3, terminal 	    					       ║\n"
 printf "╚══════════════════════════════════════════════════════════════════════════════════════════════╝\n"
 printf "\n"
 
-echo -n "Для продолжения нажмите ввод"
-read nothing
-
 function create_sess {
-	# Это функция создания новой сессии tmux. Она разбита на 2 функции, разделенные паузой из-за невозможности одноврменно запустить poetry shell и последующей любой команды. 
+	# Это функция создания новой сессии tmux. 
+	# Она разбита на 2 функции, разделенные паузой из-за невозможности одновременно запустить poetry shell и последующей любой команды. 
 	function session_tmux_new_1 {
-	tmux kill-session -t $project_name #На всякий случай убьем сессию, если она существует
-	tmux new -s $project_name -n vim -d #Создаем tmux-сессию с названием нашего выбранного проекта и сразу от нее отключаемся, оставляя ее работать как сервер. Также создаем первое окно с названием vim
-	# Создаем новое окно 2 рабочего стола - 2:1
+	tmux kill-session -t $project_name # На всякий случай убьем сессию, если она существует
+	tmux new -s $project_name -n vim -d # Создаем tmux-сессию с названием нашего выбранного проекта, называем первое окно vim и сразу отключаемся от проекта оставляя его работать как сервер
+	# Создаем новое окно 2 рабочего стола - 2:1 и называем его develop
 	tmux new-window -n develop -t $project_name 
-	# Делим окна и присваиваем им номера для дальнейшего управления
+	# Делим окна 
 	# Для рабочего стола 1
 	tmux send-keys -t $project_name:1.1 'poetry shell' Enter #Подключаем poetry
 	# Для рабочего стола 2
@@ -102,54 +96,52 @@ function create_sess {
 	tmux split-window -v -t $project_name:2.2 #Разбивам окно 2 рабочего окна
 	# Записываем, что хотим открыть в этих окнах	
 	# Первый рабочий стол
-	# 2 рабочий стол
+	# Второй рабочий стол
 	tmux send-keys -t $project_name:2.1 'poetry shell' Enter # Здесь будет эмулятор терминала c включенным poetry окружением
-	tmux send-keys -t $project_name:2.2 'poetry shell' Enter #Запускаем poetry среду и включаем ее python
-	tmux send-keys -t $project_name:2.3 'htop' Enter #В верхней панели запускаем htop
+	tmux send-keys -t $project_name:2.2 'poetry shell' Enter # Запускаем poetry среду и включаем ее python
+	tmux send-keys -t $project_name:2.3 'htop' Enter # В верхней панели запускаем htop
 
-	tmux select-window -t $project_name:1.1 #Переводим курсор на окно 1
+	tmux select-window -t $project_name:1.1 # Переводим курсор на окно 1
 	}
 	function session_tmux_new_2 { # Здесь перечисленны запуски того, что выключается после poetry shell
-	tmux send-keys -t $project_name:1.1 'vim' Enter #На всю панель включаем vim (потом сделать программу выбора сессий)
-	tmux send-keys -t $project_name:2.2 'python3' Enter #Запускаем poetry среду и включаем ее python
+	tmux send-keys -t $project_name:1.1 'vim' Enter # На всю панель включаем vim (потом сделать программу выбора сессий)
+	tmux send-keys -t $project_name:2.2 'python3' Enter # Запускаем poetry среду и включаем ее python
 	}
 	session_tmux_new_1
 	sleep 3
 	session_tmux_new_2
 	sleep 1
-	tmux attach-session -t $project_name #Подключаемся к сессии, после завершения всех настроек
-	clear #Очистим терминал 
+	tmux attach-session -t $project_name # Подключаемся к сессии, после завершения всех настроек
+	clear # Очистим терминал 
 }
 
 function auth_sess {
 	tmux attach-session -t $project_name	
-	clear #Очистим терминал 
+	clear # Очистим терминал 
 }
 
-hases="$(tmux has-session -t=$project_name 2> ~/tmp/ba.txt)" #Эта штука создает файл, записывает в файл ошибку нахождения сессии или не записывает
+hases="$(tmux has-session -t=$project_name 2> ~/tmp/ba.txt)" # Эта штука создает файл, записывает в файл ошибку нахождения сессии или не записывает
 if [[ -s ~/tmp/ba.txt ]]; then
-	#printf "NO_EMPTY \n" # Вывести если ошибка записана и файл не пуст	
 	printf "\n"
 	printf "╔══════════════════════════════════════════════════════╗\n"
-	printf "║Сессия еще не существует, значит мы ее создаем        ║\n"
+	printf "║The session does not exist, we will create it         ║\n"
 	printf "╚══════════════════════════════════════════════════════╝\n"
 	printf "\n"
-	echo -n "Для продолжения нажмите ввод"
+	echo -n "Press enter to continue: "
 	read nothing
 	create_sess
 else
-	#printf "EMPTY \n" # Вывести если ошибка незаписана и файл пуст
 	printf "\n"
 	printf "╔══════════════════════════════════════════════════════╗\n"
-	printf "║Сессия уже существует.                                ║\n"
+	printf "║Session already exists                                ║\n"
 	printf "╚══════════════════════════════════════════════════════╝\n"
 	printf "\n"
-	echo -n "Продолжить в старой? y/n: "
+	echo -n "Continue with the old session? y/n: "
 	read authorization_decision
 
 	printf "\n"
 	printf "╔══════════════════════════════════════════════════════╗\n"
-	printf "║Подождите 5 секунд, включаем...                       ║\n"
+	printf "║Wait 5 seconds, turn on...                            ║\n"
 	printf "╚══════════════════════════════════════════════════════╝\n"
 	printf "\n"
 
