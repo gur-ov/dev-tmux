@@ -1,8 +1,9 @@
 [tool.poetry]
-name = "dev-tmux"
-version = "0.1.0"
+name = "gur-ov/dev-tmux"
+version = "1.0.0"
 description = "Script for open tmux develop session"
-authors = ["gur-ov <gurov.mobile@gmail.com>"]
+authors = ["Mikhail Gurov <gurov.mobile@gmail.com>"]
+license = "Creative Commons CC0"
 
 [tool.poetry.dependencies]
 python = "^3.9"
