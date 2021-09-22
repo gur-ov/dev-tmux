@@ -1,19 +1,24 @@
 #!/bin/bash
 
 clear
-cd /home/gurov/documents/development/poetry_github/ # Enter your path here where your project directories are stored 
+source types_of_sessions 
+source function_type-env # Это файл,который содержит сессии. Надо будет по моимо poetry и virtualenv сделать 3 вощможность - ручной выбор
+
+cd /home/gurov/documents/development/ # Enter your path here where your project directories are stored 
 info='cat info/git_pass.md'
 b_pwd=`pwd` # Эта переменная всегда будет показывать одно и то же
 printf "\n"
 printf "╔══════════════════════════════════════════════════════════════════════════════════════════════╗\n"
 printf "║Welcome to gur-ov/dev-tmux | www.gurov.sk/dev                                         	       ║\n"
-printf "║License: Creative Commons CC0                                         		               ║\n"
-printf "║Your projects should include: git, poetry, python3                                            ║\n"
+printf "║license: creative commons cc0                                         		               ║\n"
 printf "╚══════════════════════════════════════════════════════════════════════════════════════════════╝\n"
+
+environment_type_selection_function # Функция из дополнительного файла для выбора типа рабочего окружения
+
 printf "\n"
 printf "╔══════════════════════════════════════════════════════════════════════════════════════════════╗\n"
-printf "║What will we open?			                                                       ║\n"
-printf "║We are here: $b_pwd \n"
+printf "║It's OK. And what will we open?			                                       ║\n"
+printf "║We are here: `pwd` \n"
 printf "║Look at the list of projects and choose one                                   		       ║\n"
 printf "╚══════════════════════════════════════════════════════════════════════════════════════════════╝\n"
 printf "\n"
@@ -30,12 +35,11 @@ printf "\n"
 # Необходимо проверить, существует ли этот каталог. Если нет, вернуться на этап выбора.
 
 function re-enter {
-	cd /home/gurov/documents/development/poetry_github/
 	b_pwd=`pwd` # Эта переменная всегда будет показывать одно и то же
 	printf "\n"
 	printf "╔══════════════════════════════════════════════════════════════════════════════════════════════╗\n"
 	printf "║Error. Try again 									       ║\n"
-	printf "║We are here: $b_pwd \n"
+	printf "║We are here: `pwd` \n"
 	printf "║Take another look at the list of projects and choose one 				       ║\n"
 	printf "╚══════════════════════════════════════════════════════════════════════════════════════════════╝\n"
 	printf "\n"
@@ -58,6 +62,7 @@ function control_name_1 {
 		printf "║Everything is ok, you can continue                   ║\n"
 		printf "╚═════════════════════════════════════════════════════╝\n"
 		printf "\n"
+		cd $project_name
 
 	else
 		printf "\n"
@@ -72,57 +77,32 @@ function control_name_1 {
 
 control_name_1
 
-cd /home/gurov/documents/development/poetry_github/$project_name
 printf "\n"
 printf "╔══════════════════════════════════════════════════════════════════════════════════════════════╗\n"
 printf "║Go to the directory with the project $project_name \n"
 printf "║Now we are here: `pwd`\n"
-printf "║Launch: tmux, poetry: python3, terminal 	    					       ║\n"
+printf "║Launch what do you need   		 	    					       ║\n"
 printf "╚══════════════════════════════════════════════════════════════════════════════════════════════╝\n"
 printf "\n"
 
 function create_sess {
-	# Это функция создания новой сессии tmux. 
-	# Она разбита на 2 функции, разделенные паузой из-за невозможности одновременно запустить poetry shell и последующей любой команды. 
-	function session_tmux_new_1 {
-	tmux kill-session -t $project_name # На всякий случай убьем сессию, если она существует
-	tmux new -s $project_name -n vim -d # Создаем tmux-сессию с названием нашего выбранного проекта, называем первое окно vim и сразу отключаемся от проекта оставляя его работать как сервер
-	# Создаем новое окно 2 рабочего стола - 2:1 и называем его develop
-	tmux new-window -n develop -t $project_name 
-	# Создаем новое окно 3 рабочего стола - 3:1 и называем его develop
-	tmux new-window -n info -t $project_name 
-	# Делим окна 
-	# Для рабочего стола 1
-	tmux send-keys -t $project_name:1.1 'poetry shell' Enter #Подключаем poetry
-	# Для рабочего стола 2
-	tmux split-window -h -t $project_name:2.1 #Разбивам окно 2 рабочего окна
-	tmux split-window -v -t $project_name:2.2 #Разбивам окно 2 рабочего окна
-	# Для рабочего стола 3
-	tmux split-window -h -t $project_name:3.1 #Разбивам окно 3 рабочего окна
-	tmux split-window -v -t $project_name:3.2 #Разбивам окно 3 рабочего окна
-	# Записываем, что хотим открыть в этих окнах	
-	# Первый рабочий стол
-	# Второй рабочий стол
-	tmux send-keys -t $project_name:2.1 'poetry shell' Enter # Здесь будет эмулятор терминала c включенным poetry окружением
-	tmux send-keys -t $project_name:2.2 'poetry shell' Enter # Запускаем poetry среду и включаем ее python
-	tmux send-keys -t $project_name:2.3 'htop' Enter # В верхней панели запускаем htop
-	# Третий рабочий стол
-	tmux send-keys -t $project_name:3.1 'cd info/ && cat git_pass.md' Enter # Enter here the folder that contains the git info file
-	tmux send-keys -t $project_name:3.2  # Место пока свободно, можно вывести подсказки
-	tmux send-keys -t $project_name:3.3  # Место пока свободно, можно вывести подсказки
-
-	tmux select-window -t $project_name:1.1 # Переводим курсор на окно 1
-	}
-	function session_tmux_new_2 { # Здесь перечисленны запуски того, что выключается после poetry shell
-	tmux send-keys -t $project_name:1.1 'vim' Enter # На всю панель включаем vim (потом сделать программу выбора сессий)
-	tmux send-keys -t $project_name:2.2 'python3' Enter # Запускаем poetry среду и включаем ее python
-	}
-	session_tmux_new_1
-	sleep 3
-	session_tmux_new_2
-	sleep 1
-	tmux attach-session -t $project_name # Подключаемся к сессии, после завершения всех настроек
-	clear # Очистим терминал 
+	# Здесь должен начаться выбор типа сессии, хотя лучше автоматически,исходя из хначения переменной
+	# Данная функция отвечает за выбор типа сессии, который мы собираемся создать
+	# Сначала программа должна показать список доступных сессий и предоставить выбор. Пока сессий две, оставлю это автоматически
+	# НЕОБХОДИМО СДЕЛАТЬ 3 ВОЗМОЖНОСТЬ - выбор сессии в ручную из представленных. И это должно быть реализовано сперва с тем, что прогамма выводит список всех доступных функций из файла с функциями запуска сессий. А потом в зависимости от выбра включает актиацию нужной функции. Там же не плохо бы иметь возможность сперва сменить каталог работы
+	
+	if [[  "$project_environment_type" -eq 1 ]]; then # Если переменная типа окружения Poetry, то открой тип сессии poetry
+		$(create_sess_poetry)
+		clear
+	elif [[  "$project_environment_type" -eq 2 ]]; then # Если переменная типа окружения Virtualenv, то открой тип сессии virtualenv
+		$(create_sess_virtualenv)
+		clear
+	elif [[  "$project_environment_type" -eq 3 ]]; then # Если переменная типа окружения Virtualenv+pelican, то открой тип сессии virtualenv+pelican
+		$(create_sess_virtualenv_pelican)
+		clear
+	else
+		echo "ERROR!"
+	fi
 }
 
 function auth_sess {
@@ -139,7 +119,7 @@ if [[ -s ~/tmp/ba.txt ]]; then
 	printf "\n"
 	echo -n "Press enter to continue: "
 	read nothing
-	create_sess
+	create_sess # Запуск выбора типа сесии, а не просто создание сессии
 else
 	printf "\n"
 	printf "╔══════════════════════════════════════════════════════╗\n"
@@ -160,7 +140,7 @@ else
 	if [[ "$authorization_decision" = "$authorization_decision_yes" ]]; then
 		auth_sess
 	else
-		create_sess
+		create_sess # Запуск выбора типа сесии, а не просто создание сессии
 	fi
 
 fi

@@ -1,0 +1,38 @@
+#!/bin/bash
+
+function kva {
+	echo "BA!"
+}
+
+function environment_type_selection_function {
+# Блок выбора типа окружения
+printf "\n"
+printf "╔══════════════════════════════════════════════════════════════════════════════════════════════╗\n"
+printf "║Now we are here: `pwd` \n"
+printf "║First we need to define the type of project                                          	       ║\n"
+printf "║Poetry or virtualenv? Click...				                                       ║\n"
+printf "║- (p) if correct poetry+git				                                       ║\n"
+printf "║- (v) if correct virtualenv				                                       ║\n"
+printf "║- (w) if correct virtualenv+pelican				                               ║\n"
+printf "║- (a) if you need something other				                               ║\n"
+printf "╚══════════════════════════════════════════════════════════════════════════════════════════════╝\n"
+printf "\n"
+echo -n "Click (p/v/a/w): "
+read type_of_virtual_environment 
+printf "\n"
+	# Блок анализа выбора открыть проект связанный с poetry или с virtualenv
+	# Речь идет о выборе каталога, куда переместиться, ведь эти проекты лежат в разных каталогах
+	if [[ "$type_of_virtual_environment" = "p" ]]; then
+		cd poetry_github/
+		project_environment_type=1
+	elif [[ "$type_of_virtual_environment" = "v" ]]; then
+		cd virtualenv/
+		project_environment_type=2
+	elif [[ "$type_of_virtual_environment" = "w" ]]; then
+		cd virtualenv_pelican/
+		project_environment_type=3
+	else
+		project_environment_type="another"
+		echo "ERROR! This function is under construction."
+	fi
+}
