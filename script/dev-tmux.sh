@@ -1,8 +1,12 @@
 #!/bin/bash
 
 clear
-source types_of_sessions 
-source function_type-env # Это файл,который содержит сессии. Надо будет по моимо poetry и virtualenv сделать 3 вощможность - ручной выбор
+
+# Скрипт для того, чтобы программа могла сама себя найти. Нужно для запуска по сиволической ссылки из каталога usr/local/bin
+POSITION=`realpath $0`
+WAY=`dirname $POSITION`
+source $WAY/types_of_sessions
+source $WAY/function_type-env
 
 cd /home/gurov/documents/development/ # Enter your path here where your project directories are stored 
 info='cat info/git_pass.md'
@@ -119,6 +123,11 @@ if [[ -s ~/tmp/ba.txt ]]; then
 	printf "\n"
 	echo -n "Press enter to continue: "
 	read nothing
+	printf "\n"
+	printf "╔══════════════════════════════════════════════════════╗\n"
+	printf "║Wait 5 seconds, turn on...                            ║\n"
+	printf "╚══════════════════════════════════════════════════════╝\n"
+	printf "\n"
 	create_sess # Запуск выбора типа сесии, а не просто создание сессии
 else
 	printf "\n"
