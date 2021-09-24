@@ -5,16 +5,49 @@ clear
 # Скрипт для того, чтобы программа могла сама себя найти. Нужно для запуска по сиволической ссылки из каталога usr/local/bin
 POSITION=`realpath $0`
 WAY=`dirname $POSITION`
-source $WAY/types_of_sessions
-source $WAY/function_type-env
+cd $WAY
+source types_of_sessions
+source function_type-env
 
-cd /home/gurov/documents/development/ # Enter your path here where your project directories are stored 
+function control_default_folder {
+	if [[ -s way ]]; then
+		source $WAY/way
+		cd ~/$(way_dir_0)
+	else 
+		printf "\n"
+		printf "╔══════════════════════════════════════════════════════════════════════════════════════════════╗\n"
+		printf "║Welcome to gur-ov/dev-tmux | www.gurov.sk/dev                                         	       ║\n"
+		printf "║License: Creative Commons CC0                                         		               ║\n"
+		printf "║   =======================================================================================    ║\n"
+		printf "║This is first start program.           						       ║\n"
+		printf "║Please, specify the directory where your project are located				       ║\n"
+		printf "╚══════════════════════════════════════════════════════════════════════════════════════════════╝\n"
+		printf "\n"
+		echo -n "Please, enter way: ~/: "
+		read default_way_prepare
+
+		# Здесь должен пройти контроль ввода, не ошибка ли это, иначе не включать функцию записи в файл
+
+
+
+
+		# Записать строку из default_way_prepare в файл way и его функцию WAY_DIR
+		printf "#!/bin/bash \n source $WAY/types_of_sessions \n source $WAY/function_type-env \n function way_dir_0 { \n echo \"$default_way_prepare\" \n } \n " >> way
+		source $WAY/way
+		cd ~/$(way_dir_0)
+		echo -n "We are here: `pwd`. The settings are made and saved."
+		read nothing
+	fi
+}
+
+control_default_folder # Функция для ввода пути где лежат каталоги с проектами
+
 info='cat info/git_pass.md'
 b_pwd=`pwd` # Эта переменная всегда будет показывать одно и то же
 printf "\n"
 printf "╔══════════════════════════════════════════════════════════════════════════════════════════════╗\n"
 printf "║Welcome to gur-ov/dev-tmux | www.gurov.sk/dev                                         	       ║\n"
-printf "║license: creative commons cc0                                         		               ║\n"
+printf "║License: Creative Commons CC0                                         		               ║\n"
 printf "╚══════════════════════════════════════════════════════════════════════════════════════════════╝\n"
 
 environment_type_selection_function # Функция из дополнительного файла для выбора типа рабочего окружения

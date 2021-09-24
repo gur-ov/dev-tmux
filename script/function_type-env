@@ -1,9 +1,5 @@
 #!/bin/bash
 
-function kva {
-	echo "BA!"
-}
-
 function environment_type_selection_function {
 # Блок выбора типа окружения
 printf "\n"
@@ -23,13 +19,13 @@ printf "\n"
 	# Блок анализа выбора открыть проект связанный с poetry или с virtualenv
 	# Речь идет о выборе каталога, куда переместиться, ведь эти проекты лежат в разных каталогах
 	if [[ "$type_of_virtual_environment" = "p" ]]; then
-		cd poetry_github/
+		cd poetry_git/ # This is a link to a directory with projects that use git and poetry 
 		project_environment_type=1
 	elif [[ "$type_of_virtual_environment" = "v" ]]; then
-		cd virtualenv/
+		cd virtualenv/ # This is a link to a directory with projects that use virtualenv
 		project_environment_type=2
 	elif [[ "$type_of_virtual_environment" = "w" ]]; then
-		cd virtualenv_pelican/
+		cd virtualenv_pelican/ # This is a link to a directory with projects that use virtualenv and pelican
 		project_environment_type=3
 	else
 		project_environment_type="another"
