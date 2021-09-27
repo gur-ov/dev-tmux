@@ -29,25 +29,31 @@ It is planned to add a session opening script to the vim tab, which will be indi
   
 In order to use the program, your projects must be in a specific directory. For example: 
 
-> Documents/develop
+```
+Documents/develop
+```
 
 Further, your projects should be divided according to the technologies that you use. The division should be by directories. For example: 
 
-> git_virtualenv
-> git_virtualenv_pelican
-> git_poetry
+```
+git_virtualenv
+git_virtualenv_pelican
+git_poetry
+```
 
 Accordingly, the program will then understand which environment needs to be included for which type of development project. For example, you may have several projects in the "git_virtualenv" that use git and virtualanv technologies. The names of these projects are given below for clarity. 
 
-> git_virtualenv
->   ├── Project_1
->     ├── source_code.py
->     ├── .git 
->   ├── Project_2
->     ├── source_code.py
->     ├── .git
-> git_virtualenv_pelican
-> git_poetry
+```
+git_virtualenv
+  ├── Project_1
+    ├── source_code.py
+    ├── .git 
+  ├── Project_2
+    ├── source_code.py
+    ├── .git
+git_virtualenv_pelican
+git_poetry
+```
 
 How does the program understand how to open tmax? They open it individually for each project, if the session is saved. The first time a session is created, it opens the main development environment for a specific type of project, be it git_virtualenv or git_poetry, or something else. 
 
