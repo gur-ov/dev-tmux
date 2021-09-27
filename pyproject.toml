@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gur-ov/dev-tmux"
-version = "2.0.0"
+version = "2.1.0"
 description = "Script for open tmux develop session"
 authors = ["Mikhail Gurov <gurov.mobile@gmail.com>"]
 license = "Creative Commons CC0"
