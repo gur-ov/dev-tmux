@@ -10,10 +10,11 @@ printf "║Poetry or virtualenv? Click...				                                   
 printf "║- (p) if correct poetry+git				                                       ║\n"
 printf "║- (v) if correct virtualenv				                                       ║\n"
 printf "║- (w) if correct virtualenv+pelican				                               ║\n"
+printf "║- (b) if correct bash           				                               ║\n"
 printf "║- (a) if you need something other				                               ║\n"
 printf "╚══════════════════════════════════════════════════════════════════════════════════════════════╝\n"
 printf "\n"
-echo -n "Click (p/v/a/w): "
+echo -n "Click (p/v/a/b/w): "
 read type_of_virtual_environment 
 printf "\n"
 	# Блок анализа выбора открыть проект связанный с poetry или с virtualenv
@@ -27,6 +28,9 @@ printf "\n"
 	elif [[ "$type_of_virtual_environment" = "w" ]]; then
 		cd virtualenv_pelican/ # This is a link to a directory with projects that use virtualenv and pelican
 		project_environment_type=3
+	elif [[ "$type_of_virtual_environment" = "b" ]]; then
+		cd bash/ # This is a link to a directory with projects that use bash
+		project_environment_type=4
 	else
 		project_environment_type="another"
 		echo "ERROR! This function is under construction."

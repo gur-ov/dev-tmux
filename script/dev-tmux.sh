@@ -153,6 +153,9 @@ function create_sess {
 	elif [[  "$project_environment_type" -eq 3 ]]; then # Если переменная типа окружения Virtualenv+pelican, то открой тип сессии virtualenv+pelican
 		$(create_sess_virtualenv_pelican)
 		clear
+	elif [[  "$project_environment_type" -eq 4 ]]; then # Если переменная типа окружения Bash, то открой тип сессии Bash
+		$(create_sess_bash)
+		clear
 	else
 		echo "ERROR!"
 	fi
