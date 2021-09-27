@@ -9,7 +9,34 @@ cd $WAY
 source types_of_sessions
 source function_type-env
 
-function control_default_folder {
+
+function control_default_folder_2 { # Данная функция является продолжением control_default_folder_1 и выполняется если каталог, введенный пользователем существует. 
+	# Записать строку из default_way_prepare в файл way и его функцию WAY_DIR
+	printf "#!/bin/bash \n source $WAY/types_of_sessions \n source $WAY/function_type-env \n function way_dir_0 { \n echo \"$default_way_prepare\" \n } \n " >> way
+	source $WAY/way
+	cd ~/$(way_dir_0)
+	echo -n "We are here: `pwd`. The settings are made and saved. Press enter to continue."
+	read nothing
+	clear
+	}
+
+function re-enter_first-start { # Функция включается при первом старте программы. Программа понимает, что включена первый раз если файл way пустой.
+	if [[ -d  ~/$default_way_prepare ]]; then
+		control_default_folder_2
+	else
+		#Error! The directory you selected does not exist!
+		printf "\n"
+		printf "╔══════════════════════════════════════════════════════════════════════════════════════════════╗\n"
+		printf "║Error.The directory you selected does not exist! Try again!				       ║\n"
+		printf "╚══════════════════════════════════════════════════════════════════════════════════════════════╝\n"
+		printf "\n"
+		echo -n "Please, enter way: ~/: "
+		read default_way_prepare
+		re-enter_first-start
+	fi
+	}
+
+function control_default_folder_1 {
 	if [[ -s way ]]; then
 		source $WAY/way
 		cd ~/$(way_dir_0)
@@ -25,22 +52,11 @@ function control_default_folder {
 		printf "\n"
 		echo -n "Please, enter way: ~/: "
 		read default_way_prepare
-
-		# Здесь должен пройти контроль ввода, не ошибка ли это, иначе не включать функцию записи в файл
-
-
-
-
-		# Записать строку из default_way_prepare в файл way и его функцию WAY_DIR
-		printf "#!/bin/bash \n source $WAY/types_of_sessions \n source $WAY/function_type-env \n function way_dir_0 { \n echo \"$default_way_prepare\" \n } \n " >> way
-		source $WAY/way
-		cd ~/$(way_dir_0)
-		echo -n "We are here: `pwd`. The settings are made and saved."
-		read nothing
+		re-enter_first-start
 	fi
 }
 
-control_default_folder # Функция для ввода пути где лежат каталоги с проектами
+control_default_folder_1 # Функция для ввода пути где лежат каталоги с проектами
 
 info='cat info/git_pass.md'
 b_pwd=`pwd` # Эта переменная всегда будет показывать одно и то же
