@@ -8,7 +8,7 @@ Script for open develop tmux session. This is a tutorial project, although I'm u
 
 ### Latest updates
 
-The program received all the necessary working functionality, including control of user input. For the transition to version 2.1.0, documentation will be written for more convenient use of the program by other users. 
+The program received all the necessary working functionality, including control of user input. Also, documentation was written for more convenient use of the program by other users. 
 
   ## License
 
